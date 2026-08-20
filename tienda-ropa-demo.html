@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[Nombre de la Tienda] — Ropa con carácter, hecha para durar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tinta:#1E2230;
+    --tinta-2:#282D3F;
+    --lino:#F1EEE7;
+    --lino-dim:#E4DFD3;
+    --ciruela:#6E3A49;
+    --ciruela-dark:#552C38;
+    --arena:#C9A876;
+    --musgo:#5B6B4F;
+    --line-dark: rgba(241,238,231,0.14);
+    --line-light: rgba(30,34,48,0.14);
+    --display: 'Cormorant Garamond', serif;
+    --body: 'Manrope', sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--body); background:var(--lino); color:var(--tinta); line-height:1.55;}
+  img,svg{display:block; max-width:100%;}
+  a{color:inherit;}
+  .wrap{max-width:1140px; margin:0 auto; padding:0 24px;}
+  h1,h2,h3{font-family:var(--display); font-weight:600; line-height:1.02; letter-spacing:0.2px;}
+  .eyebrow{
+    font-family:var(--mono); font-size:11px; letter-spacing:2px; text-transform:uppercase;
+    color:var(--ciruela); display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .eyebrow::before{content:""; width:22px; height:1px; background:var(--ciruela); display:inline-block;}
+
+  .stitch{ height:1px; background-image: repeating-linear-gradient(90deg, var(--tinta) 0 5px, transparent 5px 11px); opacity:0.18; }
+  .stitch.on-dark{ background-image: repeating-linear-gradient(90deg, var(--lino) 0 5px, transparent 5px 11px); opacity:0.16; }
+
+  header{ position:sticky; top:0; z-index:50; background:var(--tinta); color:var(--lino); border-bottom:1px solid var(--line-dark); }
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; max-width:1140px; margin:0 auto; }
+  .logo{ font-family:var(--display); font-size:26px; font-style:italic; font-weight:600; letter-spacing:0.3px; color:var(--lino); }
+  .navlinks{display:flex; gap:30px; list-style:none; font-family:var(--mono); font-size:11px; letter-spacing:1px; text-transform:uppercase;}
+  .navlinks a{opacity:0.8; padding:6px 0; border-bottom:1px solid transparent; transition:.2s;}
+  .navlinks a:hover{opacity:1; border-color:var(--arena);}
+  .status-badge{
+    font-family:var(--mono); font-size:10px; letter-spacing:1px; text-transform:uppercase;
+    display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:2px;
+    background:rgba(91,107,79,0.18); color:#AEC29B; border:1px solid rgba(91,107,79,0.4);
+  }
+  .status-badge .dot{width:6px; height:6px; border-radius:50%; background:#8FBF4B;}
+  .status-badge.closed{background:rgba(110,58,73,0.22); color:#D9A5B4; border-color:rgba(110,58,73,0.5);}
+  .status-badge.closed .dot{background:var(--ciruela);}
+  .btn{
+    font-family:var(--mono); font-weight:700; font-size:11px; letter-spacing:1px; text-transform:uppercase;
+    padding:12px 22px; border-radius:2px; border:1px solid transparent; cursor:pointer;
+    display:inline-flex; align-items:center; gap:8px; transition:.15s ease;
+  }
+  .btn-solid{background:var(--ciruela); color:var(--lino);}
+  .btn-solid:hover{background:var(--ciruela-dark);}
+  .btn-outline{border-color:var(--lino); color:var(--lino); background:transparent;}
+  .btn-outline:hover{background:rgba(241,238,231,0.08);}
+  .btn-outline-dark{border-color:var(--tinta); color:var(--tinta); background:transparent;}
+  .btn-outline-dark:hover{background:rgba(30,34,48,0.06);}
+  .navcta{display:flex; align-items:center; gap:16px;}
+
+  .hero{ background:var(--tinta); color:var(--lino); padding:76px 0 0; }
+  .hero-grid{display:grid; grid-template-columns:0.95fr 1.05fr; gap:48px; align-items:center;}
+  .hero h1{font-size:clamp(42px,5.6vw,72px); color:var(--lino); font-style:italic;}
+  .hero h1 em{color:var(--arena); font-style:italic;}
+  .hero p.lead{font-family:var(--body); font-size:17px; color:#C7C2B4; max-width:420px; margin:22px 0 30px; font-style:normal;}
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:40px;}
+  .hero-art{ aspect-ratio:3/4; background:var(--tinta-2); border:1px solid var(--line-dark); position:relative; display:flex; align-items:center; justify-content:center; }
+  .hero-art svg{width:46%; opacity:0.9;}
+  .hero-art .badge-photo{ position:absolute; bottom:16px; left:16px; right:16px; font-family:var(--mono); font-size:10px; color:#B8B2A2; background:rgba(30,34,48,0.75); border:1px dashed var(--line-dark); padding:8px 10px; }
+  .hero-stats{display:flex; border-top:1px solid var(--line-dark); margin-top:6px;}
+  .hero-stat{flex:1; padding:22px 0; border-right:1px solid var(--line-dark);}
+  .hero-stat:last-child{border-right:none;}
+  .hero-stat .num{font-family:var(--display); font-style:italic; font-size:28px; color:var(--arena);}
+  .hero-stat .lab{font-family:var(--mono); font-size:10px; letter-spacing:1px; color:#B8B2A2; text-transform:uppercase;}
+
+  section{padding:88px 0;}
+  .section-head{display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:44px; flex-wrap:wrap;}
+  .section-head h2{font-size:clamp(30px,3.6vw,44px); font-style:italic;}
+  .section-head p{max-width:400px; color:#5f594e; font-size:14px;}
+
+  .steps{background:var(--lino-dim);}
+  .step-row{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
+  .step{background:var(--lino); border:1px solid var(--line-light); padding:28px;}
+  .step .stepnum{font-family:var(--mono); font-size:12px; color:var(--ciruela); letter-spacing:1px; margin-bottom:14px; display:block;}
+  .step h3{font-size:23px; margin-bottom:10px; font-style:italic; font-weight:600;}
+  .step p{font-size:13px; color:#5f594e; font-family:var(--body);}
+
+  .cat-tabs{display:flex; gap:10px; margin-bottom:32px; flex-wrap:wrap;}
+  .tab{ font-family:var(--mono); font-size:11px; letter-spacing:1px; text-transform:uppercase; padding:9px 16px; border-radius:2px; border:1px solid var(--line-light); background:transparent; cursor:pointer; transition:.15s; }
+  .tab.active{background:var(--tinta); color:var(--lino); border-color:var(--tinta);}
+  .cat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .tag-card{ background:var(--lino); border:1px solid var(--line-light); position:relative; display:flex; flex-direction:column; }
+  .tag-hole{ position:absolute; top:14px; left:14px; width:13px; height:13px; border-radius:50%; border:1.5px solid var(--arena); background:var(--lino); z-index:3; }
+  .tag-thumb{ aspect-ratio:4/5; background:linear-gradient(160deg, rgba(110,58,73,0.16), rgba(91,107,79,0.14)), var(--tinta-2); display:flex; align-items:center; justify-content:center; }
+  .tag-thumb svg{width:32%; opacity:0.85;}
+  .tag-body{padding:18px 18px 20px; display:flex; flex-direction:column; gap:8px; flex:1;}
+  .tag-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px;}
+  .tag-top h4{font-family:var(--body); font-weight:700; font-size:15px;}
+  .tag-price{font-family:var(--mono); font-weight:700; font-size:14px; color:var(--ciruela); white-space:nowrap;}
+  .tag-desc{font-size:12.5px; color:#6b6455; flex:1;}
+  .tag-sizes{display:flex; gap:6px; margin:2px 0;}
+  .size-opt{ font-family:var(--mono); font-size:11px; width:28px; height:28px; display:flex; align-items:center; justify-content:center; border:1px solid var(--line-light); cursor:pointer; transition:.15s; background:none; color:var(--tinta); }
+  .size-opt.selected{background:var(--tinta); color:var(--lino); border-color:var(--tinta);}
+  .tag-foot{display:flex; justify-content:space-between; align-items:center; margin-top:6px;}
+  .tag-label{font-family:var(--mono); font-size:9px; letter-spacing:1px; text-transform:uppercase; color:var(--musgo);}
+  .add-btn{ font-family:var(--mono); font-size:11px; letter-spacing:0.5px; text-transform:uppercase; border:1px solid var(--tinta); background:transparent; padding:7px 12px; cursor:pointer; transition:.15s; }
+  .add-btn:hover{background:var(--tinta); color:var(--lino);}
+  .add-btn.added{background:var(--musgo); border-color:var(--musgo); color:var(--lino);}
+
+  .gallery-note{background:var(--tinta); color:var(--lino);}
+  .gal-grid{display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:150px; gap:12px;}
+  .gal-grid .g1{grid-column:span 2; grid-row:span 2;}
+  .gal-item{ border:1px solid var(--line-dark); display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:10px; color:#B8B2A2; text-align:center; padding:10px; }
+
+  .rev-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .rev-card{background:var(--lino); border:1px solid var(--line-light); padding:24px;}
+  .stars{color:var(--ciruela); letter-spacing:2px; margin-bottom:12px; font-size:14px;}
+  .rev-card p.quote{font-size:13.5px; color:#4a4438; margin-bottom:16px; font-style:italic; font-family:var(--display); font-size:17px;}
+  .rev-who{display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:10px; color:#8a8372; text-transform:uppercase; letter-spacing:0.5px;}
+
+  .loc-wrap{display:grid; grid-template-columns:0.9fr 1.1fr; gap:40px;}
+  .map-box{ background:var(--lino-dim); border:1px solid var(--line-light); aspect-ratio:4/3.2; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:11px; color:#8a8372; text-align:center; padding:20px; }
+  .map-box .pin{color:var(--ciruela); font-size:28px; margin-bottom:8px;}
+  .hours-table{width:100%; border-collapse:collapse; font-family:var(--mono); font-size:12.5px;}
+  .hours-table tr{border-bottom:1px solid var(--line-light);}
+  .hours-table td{padding:11px 4px;}
+  .hours-table td:last-child{text-align:right; color:#6b6455;}
+  .loc-actions{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap;}
+  .contact-line{display:flex; gap:10px; align-items:center; margin-top:18px; font-size:13.5px; color:#4a4438;}
+
+  .social-strip{background:var(--tinta); color:var(--lino); text-align:center;}
+  .social-strip h2{font-size:clamp(28px,4vw,40px); margin-bottom:10px; font-style:italic;}
+  .social-strip p{color:#C7C2B4; margin-bottom:28px; font-size:14px;}
+  .social-icons{display:flex; justify-content:center; gap:16px;}
+  .soc{ width:50px; height:50px; border-radius:50%; border:1px solid var(--line-dark); display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:11px; transition:.15s; }
+  .soc:hover{background:var(--ciruela); border-color:var(--ciruela);}
+
+  footer{background:var(--tinta-2); color:#C7C2B4; padding:48px 0 24px; font-size:13px;}
+  .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:30px; margin-bottom:30px;}
+  .foot-col h5{font-family:var(--mono); font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--lino); margin-bottom:12px;}
+  .foot-col a{display:block; opacity:0.75; margin-bottom:8px;}
+  .foot-bottom{border-top:1px solid var(--line-dark); padding-top:20px; display:flex; justify-content:space-between; opacity:0.6; flex-wrap:wrap; gap:10px;}
+
+  .cart-fab{
+    position:fixed; bottom:22px; right:22px; z-index:80; background:var(--ciruela); color:var(--lino); border:none;
+    padding:14px 22px; font-family:var(--mono); font-weight:700; font-size:12px; letter-spacing:1px; text-transform:uppercase; cursor:pointer;
+    display:flex; align-items:center; gap:10px; box-shadow:0 8px 24px rgba(0,0,0,0.25); transition:.2s;
+  }
+  .cart-fab:hover{transform:translateY(-2px);}
+  .cart-fab .count{background:var(--lino); color:var(--ciruela); border-radius:50%; width:20px; height:20px; display:flex; align-items:center; justify-content:center; font-size:11px;}
+  .cart-panel{
+    position:fixed; top:0; right:0; height:100%; width:390px; max-width:92vw; background:var(--lino);
+    box-shadow:-10px 0 40px rgba(0,0,0,0.25); z-index:90; transform:translateX(100%); transition:.28s ease; display:flex; flex-direction:column;
+  }
+  .cart-panel.open{transform:translateX(0);}
+  .cart-head{padding:22px 22px 16px; border-bottom:1px solid var(--line-light); display:flex; justify-content:space-between; align-items:center;}
+  .cart-head h3{font-size:22px; font-style:italic;}
+  .cart-close{background:none; border:none; font-size:22px; cursor:pointer; font-family:var(--body);}
+  .cart-items{flex:1; overflow-y:auto; padding:14px 22px;}
+  .cart-empty{color:#8a8372; font-size:13px; padding:30px 0; text-align:center;}
+  .cart-line{display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--line-light); font-size:12.5px;}
+  .cart-line .ln-name{font-weight:700;}
+  .cart-line .ln-meta{font-family:var(--mono); font-size:10px; color:#8a8372;}
+  .qty-ctrl{display:flex; align-items:center; gap:8px;}
+  .qty-ctrl button{width:22px; height:22px; border:1px solid var(--line-light); background:none; cursor:pointer;}
+  .cart-foot{padding:20px 22px 26px; border-top:1px solid var(--line-light);}
+  .cart-total{display:flex; justify-content:space-between; font-family:var(--mono); font-size:16px; margin-bottom:6px;}
+  .cart-sub{font-size:10.5px; color:#8a8372; margin-bottom:16px;}
+  .fulfill{display:flex; gap:8px; margin-bottom:16px;}
+  .fulfill button{flex:1; padding:9px; font-size:11px; font-family:var(--mono); border:1px solid var(--line-light); background:none; cursor:pointer;}
+  .fulfill button.active{background:var(--tinta); color:var(--lino); border-color:var(--tinta);}
+  .scrim{position:fixed; inset:0; background:rgba(30,34,48,0.45); z-index:85; opacity:0; pointer-events:none; transition:.2s;}
+  .scrim.show{opacity:1; pointer-events:auto;}
+
+  @media (max-width: 860px){
+    .navlinks{display:none;}
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-art{order:-1; aspect-ratio:16/10;}
+    .hero{padding-top:20px;}
+    .step-row{grid-template-columns:1fr;}
+    .cat-grid{grid-template-columns:repeat(2,1fr);}
+    .gal-grid{grid-template-columns:repeat(2,1fr);}
+    .gal-grid .g1{grid-column:span 2; grid-row:span 1;}
+    .rev-grid{grid-template-columns:1fr;}
+    .loc-wrap{grid-template-columns:1fr;}
+  }
+  @media (max-width: 640px){
+    .nav{flex-wrap:wrap; row-gap:12px; padding:14px 20px;}
+    .logo{font-size:21px; flex:1 1 auto;}
+    .navcta{width:100%; justify-content:space-between;}
+    .hero-stats{flex-wrap:wrap;}
+    .hero-stat{flex:1 1 50%; border-right:none; border-bottom:1px solid var(--line-dark);}
+    section{padding:56px 0;}
+  }
+  @media (max-width: 520px){
+    .cat-grid{grid-template-columns:1fr;}
+    .status-badge{font-size:9px; padding:5px 8px;}
+    .cart-fab{padding:12px 16px; font-size:11px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <div class="logo">[Nombre de la Tienda]</div>
+    <ul class="navlinks">
+      <li><a href="#catalogo">Catálogo</a></li>
+      <li><a href="#como-comprar">Cómo comprar</a></li>
+      <li><a href="#lookbook">Lookbook</a></li>
+      <li><a href="#resenas">Reseñas</a></li>
+      <li><a href="#ubicacion">Ubicación</a></li>
+    </ul>
+    <div class="navcta">
+      <span class="status-badge" id="statusBadge"><span class="dot"></span><span id="statusText">Abierto ahora</span></span>
+      <button class="btn btn-solid" onclick="openCart()">Comprar</button>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Colección otoño (ejemplo)</p>
+      <h1>Ropa con<br>car&aacute;cter, hecha<br>para <em>durar</em></h1>
+      <p class="lead">Piezas seleccionadas a mano, tallas reales y atenci&oacute;n de barrio. Compra en l&iacute;nea y recoge en tienda o pide env&iacute;o a domicilio.</p>
+      <div class="hero-ctas">
+        <button class="btn btn-solid" onclick="document.getElementById('catalogo').scrollIntoView({behavior:'smooth'})">Ver cat&aacute;logo</button>
+        <button class="btn btn-outline" onclick="openCart()">Comprar ahora</button>
+      </div>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M70 30 L100 15 L130 30 L145 55 L125 65 L120 200 L80 200 L75 65 L55 55Z" stroke="#F1EEE7" stroke-width="3" fill="none" stroke-linejoin="round"/>
+        <circle cx="100" cy="27" r="6" stroke="#C9A876" stroke-width="2.5" fill="none"/>
+      </svg>
+      <div class="badge-photo">espacio para fotograf&iacute;a real de la colecci&oacute;n (el cliente la proporciona en la Fase 1)</div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">8+</div><div class="lab">años en el barrio</div></div>
+      <div class="hero-stat"><div class="num">4.9★</div><div class="lab">promedio de reseñas</div></div>
+      <div class="hero-stat"><div class="num">S–XL</div><div class="lab">tallas disponibles</div></div>
+      <div class="hero-stat"><div class="num">100%</div><div class="lab">piezas curadas</div></div>
+    </div>
+  </div>
+  <div class="stitch on-dark"></div>
+</section>
+
+<section class="steps" id="como-comprar">
+  <div class="wrap">
+    <div class="section-head">
+      <div><p class="eyebrow">Tres pasos, sin comisiones de terceros</p><h2>Cómo comprar</h2></div>
+      <p>Tu pedido se arma solo y llega directo a la tienda.</p>
+    </div>
+    <div class="step-row">
+      <div class="step"><span class="stepnum">Paso 01</span><h3>Elige tus prendas</h3><p>Recorre el catálogo, selecciona talla y agrega al carrito con un clic.</p></div>
+      <div class="step"><span class="stepnum">Paso 02</span><h3>Recoger o a domicilio</h3><p>Elige si pasas por tu pedido o si te lo enviamos a tu domicilio.</p></div>
+      <div class="step"><span class="stepnum">Paso 03</span><h3>Confirma por WhatsApp</h3><p>Tu pedido se arma automáticamente con tallas y cantidades — sin confusiones.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="catalogo">
+  <div class="wrap">
+    <div class="section-head">
+      <div><p class="eyebrow">Piezas de temporada</p><h2>Catálogo</h2></div>
+      <p>Precios, tallas y disponibilidad de ejemplo — el propio dueño los actualiza desde el panel del sitio.</p>
+    </div>
+    <div class="cat-tabs" id="catTabs">
+      <button class="tab active" data-cat="playeras">Playeras</button>
+      <button class="tab" data-cat="pantalones">Pantalones</button>
+      <button class="tab" data-cat="vestidos">Vestidos</button>
+      <button class="tab" data-cat="accesorios">Accesorios</button>
+    </div>
+    <div class="cat-grid" id="catGrid"></div>
+  </div>
+</section>
+
+<section class="gallery-note" id="lookbook">
+  <div class="wrap">
+    <div class="section-head">
+      <div><p class="eyebrow">Así se lleva, así se ve</p><h2 style="color:var(--lino)">Lookbook</h2></div>
+      <p style="color:#C7C2B4">Espacio para fotos reales de la tienda, el equipo y outfits armados con las prendas.</p>
+    </div>
+    <div class="gal-grid">
+      <div class="gal-item g1">Foto de la tienda / probador</div>
+      <div class="gal-item">Outfit destacado</div>
+      <div class="gal-item">Detalle de tela / textura</div>
+      <div class="gal-item">Equipo de la tienda</div>
+      <div class="gal-item">Clientas / ambiente</div>
+      <div class="gal-item">Accesorios y detalles</div>
+    </div>
+  </div>
+  <div class="stitch on-dark"></div>
+</section>
+
+<section id="resenas">
+  <div class="wrap">
+    <div class="section-head">
+      <div><p class="eyebrow">Lo que dicen las clientas</p><h2>Reseñas</h2></div>
+      <p>Ejemplos de formato — se conectan con reseñas reales de Google / Facebook de la tienda.</p>
+    </div>
+    <div class="rev-grid">
+      <div class="rev-card"><div class="stars">★★★★★</div><p class="quote">"La calidad de la tela se nota, y la talla quedó exacta a como la pedí."</p><div class="rev-who"><span>Clienta frecuente</span><span>Google</span></div></div>
+      <div class="rev-card"><div class="stars">★★★★★</div><p class="quote">"Pedí por WhatsApp y me confirmaron todo rapidísimo. Llegó bien empacado."</p><div class="rev-who"><span>Clienta frecuente</span><span>Facebook</span></div></div>
+      <div class="rev-card"><div class="stars">★★★★☆</div><p class="quote">"Ropa bonita y diferente a lo que se ve en todos lados. Ya es mi tienda de cabecera."</p><div class="rev-who"><span>Clienta frecuente</span><span>Google</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="ubicacion" style="background:var(--lino-dim)">
+  <div class="wrap">
+    <div class="section-head"><div><p class="eyebrow">Aquí nos encuentras</p><h2>Ubicación y horarios</h2></div></div>
+    <div class="loc-wrap">
+      <div>
+        <div class="map-box"><div><div class="pin">📍</div>Mapa interactivo con la ubicación exacta de la tienda<br><span style="opacity:.7">(se integra con Google Maps)</span></div></div>
+        <div class="contact-line">📞 [Teléfono] &nbsp;·&nbsp; 💬 [WhatsApp]</div>
+        <div class="loc-actions">
+          <button class="btn btn-solid">Llamar ahora</button>
+          <button class="btn btn-outline-dark">Escribir por WhatsApp</button>
+        </div>
+      </div>
+      <div>
+        <table class="hours-table">
+          <tr><td>Lunes – Viernes</td><td>11:00 – 20:00</td></tr>
+          <tr><td>Sábado</td><td>11:00 – 21:00</td></tr>
+          <tr><td>Domingo</td><td>12:00 – 18:00</td></tr>
+          <tr><td>Días festivos</td><td>Horario especial (avisado en redes)</td></tr>
+        </table>
+        <p style="font-size:13px; color:#6b6455; margin-top:18px;">[Dirección completa de la tienda, colonia, referencias para llegar]</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="social-strip">
+  <div class="wrap">
+    <h2>Síguenos</h2>
+    <p>Nuevas colecciones, outfits y promos.</p>
+    <div class="social-icons">
+      <a class="soc" href="#" aria-label="Instagram">IG</a>
+      <a class="soc" href="#" aria-label="Facebook">FB</a>
+      <a class="soc" href="#" aria-label="TikTok">TT</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col"><h5>[Nombre de la Tienda]</h5><a href="#catalogo">Catálogo</a><a href="#como-comprar">Cómo comprar</a><a href="#ubicacion">Ubicación</a></div>
+      <div class="foot-col"><h5>Contacto</h5><a href="#">[Teléfono]</a><a href="#">[WhatsApp]</a><a href="#">[Correo]</a></div>
+      <div class="foot-col"><h5>Redes</h5><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">TikTok</a></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 [Nombre de la Tienda]</span><span>Sitio de demostración — propuesta digital</span></div>
+  </div>
+</footer>
+
+<button class="cart-fab" id="cartFab" onclick="openCart()">🛍 <span>Tu bolsa</span><span class="count" id="cartCount">0</span></button>
+<div class="scrim" id="scrim" onclick="closeCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-head"><h3>Tu bolsa</h3><button class="cart-close" onclick="closeCart()">×</button></div>
+  <div class="cart-items" id="cartItems"><div class="cart-empty">Aún no agregas nada del catálogo.</div></div>
+  <div class="cart-foot">
+    <div class="fulfill">
+      <button id="fRecoger" class="active" onclick="setFulfill('recoger')">Recoger en tienda</button>
+      <button id="fDelivery" onclick="setFulfill('delivery')">Envío a domicilio</button>
+    </div>
+    <div class="cart-total"><span>Total</span><span id="cartTotal">$0</span></div>
+    <div class="cart-sub">Precios en pesos MX. Ejemplo de demostración.</div>
+    <button class="btn btn-solid" style="width:100%; justify-content:center;" onclick="sendOrder()">Enviar pedido por WhatsApp</button>
+  </div>
+</div>
+
+<script>
+  const PRODUCTS = [
+    {id:1, cat:'playeras', name:'Playera básica algodón', desc:'Corte relajado, algodón peinado 100%.', price:280, tag:'Más vendida'},
+    {id:2, cat:'playeras', name:'Playera oversize estampada', desc:'Serigrafía original, silueta amplia.', price:340, tag:''},
+    {id:3, cat:'playeras', name:'Playera de rayas', desc:'Punto fino, mangas cortas.', price:310, tag:''},
+    {id:4, cat:'playeras', name:'Blusa de lino', desc:'Fresca y ligera, ideal para diario.', price:420, tag:'Temporada'},
+    {id:5, cat:'pantalones', name:'Jeans slim', desc:'Mezclilla stretch, tiro medio.', price:590, tag:''},
+    {id:6, cat:'pantalones', name:'Pantalón wide leg', desc:'Corte holgado, tela fluida.', price:560, tag:'Más vendida'},
+    {id:7, cat:'pantalones', name:'Short de mezclilla', desc:'Tiro alto, dobladillo crudo.', price:380, tag:''},
+    {id:8, cat:'vestidos', name:'Vestido midi floral', desc:'Estampado exclusivo de temporada.', price:680, tag:'Temporada'},
+    {id:9, cat:'vestidos', name:'Vestido casual de tirantes', desc:'Algodón suave, corte recto.', price:510, tag:''},
+    {id:10, cat:'vestidos', name:'Vestido de punto', desc:'Entallado, manga larga.', price:640, tag:''},
+    {id:11, cat:'accesorios', name:'Bolsa de mano', desc:'Piel sintética, varios colores.', price:450, tag:''},
+    {id:12, cat:'accesorios', name:'Cinturón de piel', desc:'Hebilla metálica, ajustable.', price:250, tag:''},
+  ];
+  const SIZES = ['S','M','L','XL'];
+  const ICONS = {
+    playeras:'M60 30 L90 15 L110 15 L140 30 L155 55 L135 65 L130 170 L70 170 L65 65 L45 55Z',
+    pantalones:'M70 20 L130 20 L135 100 L155 190 L125 190 L100 110 L75 190 L45 190 L65 100Z',
+    vestidos:'M75 20 L125 20 L140 55 L120 65 L130 190 L70 190 L80 65 L60 55Z',
+    accesorios:'M50 60 Q100 20 150 60 L150 140 Q100 170 50 140Z',
+  };
+  let cart = {};
+  let fulfillMode = 'recoger';
+  let activeCat = 'playeras';
+
+  function iconSVG(cat){ return `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="${ICONS[cat]}" fill="#F1EEE7" opacity="0.5"/></svg>`; }
+
+  function renderCatalog(){
+    const grid = document.getElementById('catGrid');
+    const items = PRODUCTS.filter(i => i.cat === activeCat);
+    grid.innerHTML = items.map(i => `
+      <div class="tag-card">
+        <div class="tag-hole"></div>
+        <div class="tag-thumb">${iconSVG(i.cat)}</div>
+        <div class="tag-body">
+          <div class="tag-top"><h4>${i.name}</h4><span class="tag-price">$${i.price}</span></div>
+          <p class="tag-desc">${i.desc}</p>
+          <div class="tag-sizes" id="sizes-${i.id}">
+            ${SIZES.map((s,idx) => `<button type="button" class="size-opt${idx===1?' selected':''}" data-size="${s}" onclick="selectSize(${i.id},'${s}',this)">${s}</button>`).join('')}
+          </div>
+          <div class="tag-foot">
+            <span class="tag-label">${i.tag || ''}</span>
+            <button class="add-btn" id="add-${i.id}" onclick="addItem(${i.id})">Agregar</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('catTabs').addEventListener('click', (e) => {
+    if(e.target.classList.contains('tab')){
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      e.target.classList.add('active');
+      activeCat = e.target.dataset.cat;
+      renderCatalog();
+    }
+  });
+
+  function selectSize(id, size, btn){
+    document.querySelectorAll(`#sizes-${id} .size-opt`).forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+  function getSelectedSize(id){
+    const sel = document.querySelector(`#sizes-${id} .size-opt.selected`);
+    return sel ? sel.dataset.size : 'M';
+  }
+
+  function addItem(id){
+    const size = getSelectedSize(id);
+    const key = id + '-' + size;
+    cart[key] = cart[key] || { id, size, qty: 0 };
+    cart[key].qty += 1;
+    updateCartUI();
+    const btn = document.getElementById('add-'+id);
+    if(btn){ btn.textContent = 'Agregado ✓'; btn.classList.add('added'); setTimeout(()=>{btn.textContent='Agregar'; btn.classList.remove('added');}, 900); }
+  }
+  function changeQty(key, delta){
+    cart[key].qty += delta;
+    if(cart[key].qty <= 0) delete cart[key];
+    updateCartUI();
+  }
+  function cartCount(){ return Object.values(cart).reduce((a,b)=>a+b.qty,0); }
+  function cartTotalValue(){ return Object.values(cart).reduce((sum,line) => sum + PRODUCTS.find(p=>p.id==line.id).price*line.qty, 0); }
+  function updateCartUI(){
+    document.getElementById('cartCount').textContent = cartCount();
+    document.getElementById('cartTotal').textContent = '$' + cartTotalValue();
+    const box = document.getElementById('cartItems');
+    const entries = Object.entries(cart);
+    if(entries.length === 0){ box.innerHTML = '<div class="cart-empty">Aún no agregas nada del catálogo.</div>'; return; }
+    box.innerHTML = entries.map(([key,line]) => {
+      const p = PRODUCTS.find(x=>x.id==line.id);
+      return `<div class="cart-line">
+        <div><div class="ln-name">${p.name}</div><div class="ln-meta">Talla ${line.size} · $${p.price} c/u</div></div>
+        <div class="qty-ctrl"><button onclick="changeQty('${key}',-1)">−</button><span>${line.qty}</span><button onclick="changeQty('${key}',1)">+</button></div>
+      </div>`;
+    }).join('');
+  }
+  function setFulfill(mode){
+    fulfillMode = mode;
+    document.getElementById('fRecoger').classList.toggle('active', mode==='recoger');
+    document.getElementById('fDelivery').classList.toggle('active', mode==='delivery');
+  }
+  function openCart(){ document.getElementById('cartPanel').classList.add('open'); document.getElementById('scrim').classList.add('show'); }
+  function closeCart(){ document.getElementById('cartPanel').classList.remove('open'); document.getElementById('scrim').classList.remove('show'); }
+
+  function sendOrder(){
+    if(cartCount() === 0){ alert('Agrega al menos una prenda a tu bolsa antes de enviarla.'); return; }
+    const lines = Object.values(cart).map(line => {
+      const p = PRODUCTS.find(x=>x.id==line.id);
+      return `• ${line.qty}x ${p.name} (talla ${line.size}) — $${p.price*line.qty}`;
+    }).join('%0A');
+    const mode = fulfillMode === 'recoger' ? 'Recoger en tienda' : 'Envío a domicilio';
+    const msg = `Hola, quiero hacer un pedido:%0A%0A${lines}%0A%0ATotal: $${cartTotalValue()}%0AModalidad: ${mode}`;
+    window.open(`https://wa.me/5215500000000?text=${msg}`, '_blank');
+  }
+
+  function updateStatus(){
+    const hour = new Date().getHours();
+    const open = hour >= 11 && hour < 20;
+    const badge = document.getElementById('statusBadge');
+    badge.classList.toggle('closed', !open);
+    document.getElementById('statusText').textContent = open ? 'Abierto ahora' : 'Cerrado — abre 11:00';
+  }
+
+  renderCatalog();
+  updateCartUI();
+  updateStatus();
+</script>
+</body>
+</html>
